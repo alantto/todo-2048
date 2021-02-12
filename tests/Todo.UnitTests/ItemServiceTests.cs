@@ -38,7 +38,7 @@ namespace Todo.UnitTests
         {
             var title = "Some new title";
             var result = _sut.Add(title);
-                
+
             Assert.NotNull(result);
             Assert.Equal(title, result.Title);
             Assert.Equal(ItemState.Todo, result.State);
@@ -61,8 +61,18 @@ namespace Todo.UnitTests
         {
             Assert.Throws<ArgumentException>(() => _sut.Add(title));
         }
-        
 
+        [Fact]
+        public void MarkAsDone_GivenNotDoneItem_ShouldSaveNewState()
+        {
+            var originalItem = _sut.GetAllItems(ItemState.Todo).First();
+            
+            _sut.MarkAsDone(originalItem);
+
+            var updatedItem = _sut.Get(originalItem.Id);
+            Assert.Equal(ItemState.Done, updatedItem.State);
+        }
+        
         private class ItemRepositoryStub : IItemRepository
         {
             private readonly IList<Item> _items;
@@ -71,14 +81,34 @@ namespace Todo.UnitTests
             {
                 _items = new List<Item>()
                 {
-                    new Item() {State = ItemState.Done, Title = "Some Title"},
-                    new Item() {State = ItemState.Todo, Title = "Another Title"}
+                    new Item()
+                    {
+                        State = ItemState.Done, Title = "Some Title", Id = Guid.NewGuid()
+                    },
+                    new Item()
+                    {
+                        State = ItemState.Todo, Title = "Another Title", Id = Guid.NewGuid()
+                    }
                 };
             }
 
             public IReadOnlyCollection<Item> GetAllItems() => _items.ToArray();
-            
+
             public void Add(Item item) => _items.Add(item);
+
+            public void Save(Item item)
+            {
+                var index = _items.IndexOf(item);
+                if (index == -1)
+                {
+                    _items.Add(item);
+                }
+                else
+                {
+                    _items[index] = item;
+                }
+
+            }
         }
     }
 }

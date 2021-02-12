@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 
 namespace Todo.Core.Models
@@ -18,6 +19,8 @@ namespace Todo.Core.Models
         public IReadOnlyCollection<Item> GetAllItems(ItemState state) =>
             GetAllItems().Where(x => x.State == state).ToArray();
 
+        public Item Get(Guid id) => _repository.GetAllItems().FirstOrDefault(x => x.Id == id);
+
         public Item Add(string title)
         {
             if (string.IsNullOrWhiteSpace(title))
@@ -27,12 +30,24 @@ namespace Todo.Core.Models
             
             var item = new Item()
             {
+                Id = Guid.NewGuid(),
                 Title = title,
                 State = ItemState.Todo
             };
 
             _repository.Add(item);
             return item;
+        }
+
+        public void MarkAsDone(Item item)
+        {
+            if (item.State == ItemState.Done)
+            {
+                return;
+            }
+
+            item.State = ItemState.Done;
+            _repository.Save(item);
         }
     }
 }
