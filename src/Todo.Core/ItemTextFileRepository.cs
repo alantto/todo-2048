@@ -61,6 +61,10 @@ namespace Todo.Core
         
         private (Item[] items, string[] lines) GetAllLinesAndItems()
         {
+            if (!File.Exists(_filePath))
+            {
+                return (Array.Empty<Item>(), Array.Empty<string>());
+            }
             var allLines = File.ReadAllLines(_filePath, Encoding.UTF8);
             var allItems = allLines.Select(ItemFromLine).ToArray();
             
