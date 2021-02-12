@@ -6,5 +6,6 @@ namespace Todo.Core
     public interface IItemRepository
     {
         IReadOnlyCollection<Item> GetAllItems();
+        void Add(Item item);
     }
 }
