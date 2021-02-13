@@ -1,13 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Tile from "./Tile";
 
-const copyBoard = (board) => {
-  const newBoard = [];
-  for (let i = 0; i < board.length; i++) {
-    newBoard.push(board[i].slice());
-  }
-  return newBoard;
-};
+const copyBoard = (board) => board.map((row) => row.slice());
 
 const addNewTile = (board) => {
   const randomIndex = () => Math.floor(Math.random() * board.length);
@@ -56,41 +50,20 @@ const hasFreeTiles = (board) => {
   return board.some((row) => row.some((colValue) => colValue === 0));
 };
 
-const updateBoardState = (oldState, key) => {
-  let newState = [];
-  if (key === "ArrowLeft") {
-    for (let i = 0; i < oldState.length; i++) {
-      newState.push(updateVector(oldState[i]));
-    }
-  }
+const updateBoardState = (board, key) => {
+  const isVerticalMove = key === "ArrowUp" || key === "ArrowDown";
+  const sourceBoard = isVerticalMove ? pivotBoard(board) : board;
 
-  if (key == "ArrowRight") {
-    for (let i = 0; i < oldState.length; i++) {
-      newState.push(updateReversedVector(oldState[i]));
-    }
-  }
+  const isReverseMove = key === "ArrowLeft" || key == "ArrowUp";
+  const updateFunc = isReverseMove ? updateVector : updateReversedVector;
 
-  if (key == "ArrowUp") {
-    let pivotedBoard = pivotBoard(oldState);
+  let newState = sourceBoard.map(updateFunc);
 
-    for (let i = 0; i < oldState.length; i++) {
-      newState.push(updateVector(pivotedBoard[i]));
-    }
-
-    newState = pivotBoard(newState);
-  }
-  if (key == "ArrowDown") {
-    let pivotedBoard = pivotBoard(oldState);
-
-    for (let i = 0; i < oldState.length; i++) {
-      newState.push(updateReversedVector(pivotedBoard[i]));
-    }
-
+  if (isVerticalMove) {
     newState = pivotBoard(newState);
   }
 
-  if (hasFreeTiles(newState)) return addNewTile(newState);
-  return newState;
+  return hasFreeTiles(newState) ? addNewTile(newState) : newState;
 };
 
 const ArrowKeys = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
