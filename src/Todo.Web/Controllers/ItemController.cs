@@ -26,5 +26,17 @@ namespace Todo.Web.Controllers
         
         [HttpGet]
         public IEnumerable<Item> Get() => _itemService.GetAllItems();
+
+        [HttpPost]
+        [Route("Done/{id}")]
+        public ActionResult MarkAsDone(Guid id)
+        {
+            var item = _itemService.Get(id);
+            if (item == null)
+                return NotFound();
+            _itemService.MarkAsDone(item);
+            // Re-fetch item to get updated state
+            return Ok(_itemService.Get(id));
+        }
     }
 }
