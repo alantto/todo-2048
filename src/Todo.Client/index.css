@@ -1,0 +1,19 @@
+.tile {
+  padding: 1rem;
+  border: 1px solid;
+  font-weight: bolder;
+  font-size: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.board-wrapper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+  grid-auto-rows: minmax(100px, auto);
+  width: 80vh;
+  max-width: 400px;
+  margin: 0 auto;
+}
