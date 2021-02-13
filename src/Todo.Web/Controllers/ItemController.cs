@@ -21,6 +21,9 @@ namespace Todo.Web.Controllers
             _itemService = itemService;
         }
 
+        [HttpPost]
+        public Item Post(string title) => _itemService.Add(title);
+        
         [HttpGet]
         public IEnumerable<Item> Get() => _itemService.GetAllItems();
     }
