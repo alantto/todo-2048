@@ -18,14 +18,11 @@ class DirectionTask {
   }
 
   get taskId() {
-    if (this.task) {
-      return this.task.id;
-    }
-    return null;
+    return this.task?.id;
   }
 
   get taskTitle() {
-    return this.task.title;
+    return this.task?.title;
   }
 
   withNewTask(task) {
@@ -33,11 +30,17 @@ class DirectionTask {
   }
 
   move() {
-    return new DirectionTask(this.task, this.movesLeft - 1);
+    if (this.task) {
+      return new DirectionTask(this.task, this.movesLeft - 1);
+    }
+    return new DirectionTask(null, movesPerTask);
   }
 }
 
 const randomTask = (taskList) => {
+  if (!taskList || taskList.length === 0) {
+    return null;
+  }
   return taskList[Math.floor(Math.random() * taskList.length)];
 };
 
@@ -49,6 +52,9 @@ const useDirectionTasks = (taskList) => {
   const reducer = (state, action) => {
     const move = (moveDirection) => {
       const original = state[moveDirection];
+      if (!original) {
+        return null;
+      }
       if (taskList.some((x) => x.id === original.taskId)) {
         return original.move();
       }
@@ -70,6 +76,9 @@ const useDirectionTasks = (taskList) => {
       case TASK_LIST_CHANGED:
         for (let dirKey in direction) {
           const directionTask = state[direction[dirKey]];
+          if (!directionTask) {
+            state[direction[dirKey]] = new DirectionTask(randomTask(taskList));
+          }
           if (taskList.some((task) => task.id === directionTask.taskId)) {
             continue;
           }

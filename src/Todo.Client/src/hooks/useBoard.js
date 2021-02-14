@@ -48,29 +48,9 @@ const hasFreeTiles = (board) => {
   return board.some((row) => row.some((colValue) => colValue === 0));
 };
 
-const hasAllowedMoves = (board) => {
-  const canMove = (value, row, col) => {
-    if (value === 0) {
-      return true;
-    }
-    const nextRow = row + 1;
-    if (nextRow !== board.length && value === board[nextRow][col]) {
-      return true;
-    }
 
-    const nextCol = col + 1;
-    if (nextCol !== board.length && value === board[row][nextCol]) {
-      return true;
-    }
-    return false;
-  };
 
-  return board.some((row, rowInd) =>
-    row.some((colValue, colInd) => canMove(colValue, rowInd, colInd))
-  );
-};
-
-const updateBoardState = (board, moveDirection, noAllowedMovesCallback) => {
+const makeMoveInBoard = (board, moveDirection) => {
   const isVerticalMove =
     moveDirection === direction.up || moveDirection === direction.down;
   const sourceBoard = isVerticalMove ? pivotBoard(board) : board;
@@ -84,6 +64,22 @@ const updateBoardState = (board, moveDirection, noAllowedMovesCallback) => {
   if (isVerticalMove) {
     newState = pivotBoard(newState);
   }
+  return newState;
+};
+
+const hasAllowedMoves = (board) => {
+  for (const dir in direction) {
+      const moveDirection = direction[dir];
+      const newBoard = makeMoveInBoard(board, moveDirection);
+      if (hasFreeTiles(newBoard)) {
+        return true;
+      }
+  }
+  return false;
+};
+
+const updateBoardState = (board, moveDirection, noAllowedMovesCallback) => {
+  let newState = makeMoveInBoard(board, moveDirection);
 
   if (hasFreeTiles(newState)) {
     newState = addNewTile(newState);

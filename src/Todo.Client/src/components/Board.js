@@ -40,7 +40,7 @@ const Board = ({ todoList }) => {
         updateBoard(moveDirection);
       } else {
         updateAlert(
-          "You must do " + status.taskTitle + " before moving to this direction"
+          `You must do ${status.taskTitle} before moving to this direction`
         );
       }
     };
