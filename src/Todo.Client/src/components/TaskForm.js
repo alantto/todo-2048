@@ -1,22 +1,11 @@
 import React, { useState } from "react";
 
-const TaskForm = () => {
+const TaskForm = ({addNew}) => {
   const [newTaskTitle, setNewTaskTitle] = useState("");
-  const createNewTask = async function (title) {
-    const url = `https://localhost:5001/Item?title=${title}`;
-    const response = await fetch(url, {
-      method: "POST",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    return response.json();
-  };
 
   function handleSubmit(event) {
     event.preventDefault();
-    createNewTask(newTaskTitle).then(() => {
+    addNew(newTaskTitle).then(() => {
       setNewTaskTitle("");
     });
   }

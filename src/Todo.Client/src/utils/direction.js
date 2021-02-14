@@ -1,8 +1,8 @@
 const direction = {
-  up: "up",
-  down: "down",
-  left: "left",
-  right: "right",
+  left: 0,
+  up: 1,
+  right: 2,
+  down: 3,
 };
 
 Object.freeze(direction);

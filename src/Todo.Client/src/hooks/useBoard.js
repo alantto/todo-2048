@@ -48,7 +48,29 @@ const hasFreeTiles = (board) => {
   return board.some((row) => row.some((colValue) => colValue === 0));
 };
 
-const updateBoardState = (board, moveDirection) => {
+const hasAllowedMoves = (board) => {
+  const canMove = (value, row, col) => {
+    if (value === 0) {
+      return true;
+    }
+    const nextRow = row + 1;
+    if (nextRow !== board.length && value === board[nextRow][col]) {
+      return true;
+    }
+
+    const nextCol = col + 1;
+    if (nextCol !== board.length && value === board[row][nextCol]) {
+      return true;
+    }
+    return false;
+  };
+
+  return board.some((row, rowInd) =>
+    row.some((colValue, colInd) => canMove(colValue, rowInd, colInd))
+  );
+};
+
+const updateBoardState = (board, moveDirection, noAllowedMovesCallback) => {
   const isVerticalMove =
     moveDirection === direction.up || moveDirection === direction.down;
   const sourceBoard = isVerticalMove ? pivotBoard(board) : board;
@@ -63,7 +85,13 @@ const updateBoardState = (board, moveDirection) => {
     newState = pivotBoard(newState);
   }
 
-  return hasFreeTiles(newState) ? addNewTile(newState) : newState;
+  if (hasFreeTiles(newState)) {
+    newState = addNewTile(newState);
+  }
+  if (!hasAllowedMoves(newState)) {
+    noAllowedMovesCallback();
+  }
+  return newState;
 };
 
 const emptyBoard = [
@@ -73,11 +101,13 @@ const emptyBoard = [
   [0, 0, 0, 0],
 ];
 
-const useBoard = () => {
+const useBoard = (noMoreMovesCallback) => {
   const [board, setBoard] = useState(addNewTile(addNewTile(emptyBoard)));
 
   const updateBoard = (moveDirection) => {
-    setBoard((oldBoard) => updateBoardState(oldBoard, moveDirection));
+    setBoard((oldBoard) =>
+      updateBoardState(oldBoard, moveDirection, noMoreMovesCallback)
+    );
   };
   return [board, updateBoard];
 };
