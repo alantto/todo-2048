@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
+using Todo.Core.Models;
 
-namespace Todo.Core.Models
+namespace Todo.Core
 {
     public class ItemService
     {
