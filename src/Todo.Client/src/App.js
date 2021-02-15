@@ -11,10 +11,10 @@ const App = () => {
     <>
       <h1>Things to do</h1>
       <main role="main">
-        <section class="2048-section">
+        <section className="2048-section">
           <Board todoList={todoList} />
         </section>
-        <section class="task-lists-section">
+        <section className="task-lists-section">
           <TaskForm addNew={addTask} />
           <TaskList
             todoList={todoList}
@@ -22,7 +22,7 @@ const App = () => {
             markAsDone={markAsDone}
           />
         </section>
-        <section class="info">
+        <section className="info">
           <h2>How to use</h2>
           <p>
             <strong>
