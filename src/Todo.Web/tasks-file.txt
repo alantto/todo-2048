@@ -1,0 +1,7 @@
+﻿1955b30e-c435-4bee-a028-f268034c9b37&Figure+out+why+eslint+is+not+used&Todo
+80538db9-5737-42a9-82d2-e36b4d4c7973&Add+frontend+tests&Todo
+91400cd1-1858-4a34-b41a-204c18418e3f&Fix+game+over&Todo
+45398ee5-8b64-4a90-be5a-113697996141&Make+this+page+look+!horrible&Todo
+13573b05-1871-47b1-8a04-8ebd91491f85&Think+why+have+.NET+backend%2c+when+localstorage+would+have+been+better&Todo
+274be8d8-a2ce-417c-811e-62852d6a7c6e&Make+version+of+2048&Done
+d74c6d8f-ff4d-4f4d-889e-453e5a1e3378&Add+ability+to+delete+tasks&Done
