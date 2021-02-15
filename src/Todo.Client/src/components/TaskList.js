@@ -1,19 +1,31 @@
 import React from "react";
 
-const TaskList = ({todoList, doneList, markAsDone}) => {
+const TodoTask = ({ id, title, done }) => {
+  return (
+    <div key={id} className="task task-todo">
+      <button onClick={() => done(id)}>Done</button> {title}
+    </div>
+  );
+};
 
+const DoneTask = ({ id, title }) => {
+  return (
+    <div key={id} className="task task-done">
+      {title}
+    </div>
+  );
+};
+
+const TaskList = ({ todoList, doneList, markAsDone }) => {
   return (
     <>
       <h1>Still to do</h1>
       {todoList.map((task) => (
-        <div key={task.id}>
-          <button onClick={() => markAsDone(task.id)}>Done</button>{" "}
-          {task.title}
-        </div>
+        <TodoTask done={markAsDone} {...task} />
       ))}
       <h2>Already done</h2>
       {doneList.map((task) => (
-        <div key={task.id}>{task.title}</div>
+        <DoneTask {...task} />
       ))}
     </>
   );
