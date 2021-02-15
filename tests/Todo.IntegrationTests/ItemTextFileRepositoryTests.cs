@@ -63,5 +63,18 @@ namespace Todo.IntegrationTests
             var foundItem = service.Get(itemId);
             Assert.Equal(ItemState.Done, foundItem.State);
         }
+
+        [Fact]
+        public void GivenExistingItem_ItCanBeDeleted()
+        {
+            var itemId = Guid.NewGuid();
+            _sut.Add(new Item() {Title = "Some title", State = ItemState.Todo, Id = itemId});
+            var service = new ItemService(_sut);
+
+            service.Delete(itemId);
+            
+            Assert.True(File.Exists(_filePath));
+            Assert.DoesNotContain(itemId.ToString(), File.ReadAllText(_filePath));
+        }
     }
 }

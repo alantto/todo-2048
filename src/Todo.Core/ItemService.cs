@@ -49,5 +49,16 @@ namespace Todo.Core
             item.State = ItemState.Done;
             _repository.Save(item);
         }
+
+        public void Delete(Guid id)
+        {
+            var item = Get(id);
+            if (item == null)
+            {
+                return;
+            }
+
+            _repository.Delete(item);
+        }
     }
 }

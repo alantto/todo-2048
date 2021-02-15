@@ -96,6 +96,8 @@ namespace Todo.UnitTests
 
             public void Add(Item item) => _items.Add(item);
 
+            public void Delete(Item item) => _items.Remove(item);
+            
             public void Save(Item item)
             {
                 var index = _items.IndexOf(item);

@@ -50,6 +50,14 @@ namespace Todo.Core
             
             File.WriteAllLines(_filePath, lines, Encoding.UTF8);
         }
+
+        public void Delete(Item item)
+        {
+            var (_, lines) = GetAllLinesAndItems();
+            var line = ItemToLine(item);
+            var newLines = lines.Where(x => x != line).ToArray();
+            File.WriteAllLines(_filePath, newLines, Encoding.UTF8);
+        }
         
         private (Item[] items, string[] lines) GetAllLinesAndItems()
         {

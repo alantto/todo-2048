@@ -9,5 +9,6 @@ namespace Todo.Core
         IReadOnlyCollection<Item> GetAllItems();
         void Add(Item item);
         void Save(Item item);
+        void Delete(Item item);
     }
 }
