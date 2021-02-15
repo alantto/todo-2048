@@ -68,6 +68,9 @@ const makeMoveInBoard = (board, moveDirection) => {
 };
 
 const hasAllowedMoves = (board) => {
+  if (hasFreeTiles(board)) {
+    return true;
+  }
   for (const dir in direction) {
       const moveDirection = direction[dir];
       const newBoard = makeMoveInBoard(board, moveDirection);

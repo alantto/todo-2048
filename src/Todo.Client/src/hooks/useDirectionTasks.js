@@ -58,7 +58,7 @@ const useDirectionTasks = (taskList) => {
       if (taskList.some((x) => x.id === original.taskId)) {
         return original.move();
       }
-      return original.move().withNewTask(randomTask(taskList));
+      return original.withNewTask(randomTask(taskList)).move();
     };
     switch (action.type) {
       case INITIALIZE:
@@ -121,7 +121,9 @@ const useDirectionTasks = (taskList) => {
   const stats = (moveDirection) => {
     if (state[moveDirection]) {
       return {
-        canMove: state[moveDirection].canMove,
+        canMove:
+          state[moveDirection].canMove ||
+          !taskList.some((task) => task.id === state[moveDirection].taskId), // Check if task is already done
         taskTitle: state[moveDirection].taskTitle,
         movesLeft: state[moveDirection].movesLeft,
       };
