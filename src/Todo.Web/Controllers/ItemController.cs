@@ -22,6 +22,16 @@ namespace Todo.Web.Controllers
 
         [HttpPost]
         public Item Post(string title) => _itemService.Add(title);
+
+        [HttpDelete]
+        public ActionResult Delete(Guid id)
+        {
+            var item = _itemService.Get(id);
+            if (item == null)
+                return NotFound();
+            _itemService.Delete(id);
+            return Ok();
+        }
         
         [HttpGet]
         public IEnumerable<Item> Get() => _itemService.GetAllItems();

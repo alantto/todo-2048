@@ -5,7 +5,7 @@ import TaskForm from "./components/TaskForm";
 import useTaskList from "./hooks/useTaskList";
 
 const App = () => {
-  const [todoList, doneList, markAsDone, addTask] = useTaskList();
+  const [todoList, doneList, markAsDone, addTask, deleteTask] = useTaskList();
 
   return (
     <>
@@ -20,6 +20,7 @@ const App = () => {
             todoList={todoList}
             doneList={doneList}
             markAsDone={markAsDone}
+            deleteTask={deleteTask}
           />
         </section>
         <section className="info">

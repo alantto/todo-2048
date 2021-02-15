@@ -36,6 +36,18 @@ const sendMarkAsDone = async function (id) {
   return response.json();
 };
 
+const sendDeleteTask = async function (id) {
+  const url = `${baseItemUrl}/?id=${id}`;
+  const response = await fetch(url, {
+    method: "DELETE",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return response.data;
+};
+
 const useTaskList = () => {
   const [todoList, setTodoList] = useState([]);
   const [doneList, setDoneList] = useState([]);
@@ -69,7 +81,15 @@ const useTaskList = () => {
     });
   };
 
-  return [todoList, doneList, markAsDone, addTask];
+  const deleteTask = (taskId) => {
+    return sendDeleteTask(taskId).then((data) => {
+      console.log(taskId);
+      setTodoList((oldList) => oldList.filter((t) => t.id !== taskId));
+      setDoneList((oldList) => oldList.filter((t) => t.id !== taskId));
+    });
+  };
+
+  return [todoList, doneList, markAsDone, addTask, deleteTask];
 };
 
 export default useTaskList;
