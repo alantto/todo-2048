@@ -15,3 +15,4 @@ Finally the perfect combination of wasting time and getting things done. Todo ap
 1. `cd todo-2048/src/Todo.Client`
 1. `npm i`
 1. `npm run start`
+
