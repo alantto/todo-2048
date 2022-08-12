@@ -4,7 +4,6 @@ Finally the perfect combination of wasting time and getting things done. Todo ap
 
 ![App in action](./demo.png "App demo")
 
-
 ## How to run
 
 1. Install .NET 5 and Node.js
@@ -16,3 +15,4 @@ Finally the perfect combination of wasting time and getting things done. Todo ap
 1. `cd todo-2048/src/Todo.Client`
 1. `npm i`
 1. `npm run start`
+
