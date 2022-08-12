@@ -4,7 +4,6 @@ Finally the perfect combination of wasting time and getting things done. Todo ap
 
 ![App in action](./demo.png "App demo")
 
-
 ## How to run
 
 1. Install .NET 5 and Node.js
